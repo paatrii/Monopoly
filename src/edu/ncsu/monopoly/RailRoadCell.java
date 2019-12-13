@@ -12,22 +12,24 @@ public class RailRoadCell extends Cell {
 	public static void setPrice(int price) {
 		RailRoadCell.price = price;
 	}
-	
+
 	public int getPrice() {
 		return RailRoadCell.price;
 	}
 
 	public int getRent() {
-		return RailRoadCell.baseRent * (int)Math.pow(2, owner.numberOfRR() - 1);
+		return RailRoadCell.baseRent * (int)Math.pow(2, proprietary.numberOfRR() - 1);
 	}
 	
-	public void playAction() {
+	public boolean playAction(String msg) {
 		Player currentPlayer = null;
 		if(!isAvailable()) {
 			currentPlayer = GameMaster.instance().getCurrentPlayer();
-			if(owner != currentPlayer) {
-				currentPlayer.payRentTo(owner, getRent());
+			if(proprietary != currentPlayer) {
+				currentPlayer.payRentTo(proprietary, getRent());
 			}
 		}
+		boolean booleano = true;
+    	return booleano;
 	}
 }

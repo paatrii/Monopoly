@@ -26,7 +26,7 @@ public class Player {
 	}
 
     public void buyProperty(Cell property, int amount) {
-        property.setOwner(this);
+        property.setProprietary(this);
         if(property instanceof PropertyCell) {
             PropertyCell cell = (PropertyCell)property;
             properties.add(cell);
@@ -67,7 +67,7 @@ public class Player {
 	public void exchangeProperty(Player player) {
 		for(int i = 0; i < getPropertyNumber(); i++ ) {
 			PropertyCell cell = getProperty(i);
-			cell.setOwner(player);
+			cell.setProprietary(player);
 			if(player == null) {
 				cell.setAvailable(true);
 				cell.setNumHouses(0);
@@ -82,12 +82,12 @@ public class Player {
 		properties.clear();
 	}
     
-    public Cell[] getAllProperties() {
+    public IOwnable[] getAllProperties() {
         ArrayList list = new ArrayList();
         list.addAll(properties);
         list.addAll(utilities);
         list.addAll(railroads);
-        return (Cell[])list.toArray(new Cell[list.size()]);
+        return (IOwnable[])list.toArray(new IOwnable[list.size()]);
     }
 
 	public int getMoney() {
@@ -102,7 +102,7 @@ public class Player {
             if(!(color.equals(RailRoadCell.COLOR_GROUP)) && !(color.equals(UtilityCell.COLOR_GROUP))) {
     			Integer num = (Integer)colorGroups.get(color);
     			GameBoard gameBoard = GameMaster.instance().getGameBoard();
-    			if(num.intValue() == gameBoard.getPropertyNumberForColor(color)) {
+    			if(num.intValue() == gameBoard.getPropertyNumberForColor(color, true)) {
     				monopolies.add(color);
     			}
             }
@@ -222,7 +222,7 @@ public class Player {
 	}
 
     public void sellProperty(Cell property, int amount) {
-        property.setOwner(null);
+        property.setProprietary(null);
         if(property instanceof PropertyCell) {
             properties.remove(property);
         }
